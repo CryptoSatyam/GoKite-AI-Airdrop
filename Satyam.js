@@ -50,9 +50,9 @@ async function reportUsage(wallet, options) {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    console.log(chalk.green('✅ Data penggunaan berhasil dilaporkan!\n'));
+    console.log(chalk.green('✅ Intraction Success !\n'));
   } catch (error) {
-    console.error(chalk.red('⚠️ Gagal melaporkan penggunaan:'), error.response ? error.response.data : error.message);
+    console.error(chalk.red('⚠️ Failed Intraction Try Next:'), error.response ? error.response.data : error.message);
   }
 }
 
@@ -66,19 +66,19 @@ async function main() {
       console.log(chalk.blue(`📊 Iteractions per agent: ${iterations}\n`));
 
       for (const [agentId, agentName] of Object.entries(agents)) {
-        console.log(chalk.magenta(`\n🤖 Menggunakan Agent: ${agentName}`));
+        console.log(chalk.magenta(`\n🤖 Current Using Agent: ${agentName}`));
         console.log(chalk.dim('----------------------------------------'));
 
         for (let i = 0; i < iterations; i++) {
-          console.log(chalk.yellow(`🔄 Iterasi ke-${i + 1}`));
+          console.log(chalk.yellow(`🔄 Intraction No-${i + 1}`));
           const nanya = await sendRandomQuestion(agentId);
-          console.log(chalk.cyan('❓ Pertanyaan:'), chalk.bold(nanya.question));
-          console.log(chalk.green('💡 Jawaban:'), chalk.italic(nanya?.response?.content ?? ''));
+          console.log(chalk.cyan('❓ Question:'), chalk.bold(nanya.question));
+          console.log(chalk.green('💡 Answer:'), chalk.italic(nanya?.response?.content ?? ''));
 
           await reportUsage(wallet.toLowerCase(), {
             agent_id: agentId,
             question: nanya.question,
-            response: nanya?.response?.content ?? 'Tidak ada jawaban'
+            response: nanya?.response?.content ?? 'No Answer'
           });
         }
 
